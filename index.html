@@ -427,7 +427,7 @@ function hesapView(){
   return `<button class="ic x" data-close aria-label="Kapat">${I.x}</button><h2>Hesap</h2><div class="where">${esc(V.ad)}</div>
   ${me?`<div class="me">${me.photoURL?`<img src="${esc(me.photoURL)}" alt="" referrerpolicy="no-referrer">`:""}<div><b>${esc(me.displayName||"İsimsiz")}</b><div class="note" style="margin:0">${esc(me.email||"")}</div></div></div>
     <p class="note">Eklediğin anılar ve yorumlar bu Google hesabının adıyla görünür.</p><button class="go" data-logout>Çıkış yap</button>`
-   :`<p class="empty">Anıları görmek ve eklemek için giriş yap.</p>${db?loginBtn("Google ile giriş yap"):`<p class="note">${esc(offline)}</p>`}`}
+   :`<p class="empty">Anıları görmek ve eklemek için giriş yap.</p>${loginErr?`<p class="note" style="color:var(--ink);background:var(--chip);padding:10px 12px;border-radius:12px">${esc(loginErr)}</p>`:""}${db?loginBtn("Google ile giriş yap"):`<p class="note">${esc(offline)}</p>`}`}
   <p class="note" style="margin-top:22px">Arkadaş grubunun kendi anı sayfası; mekânlarla bir bağı yoktur.</p>`;
 }
 function masaView(id){
@@ -545,11 +545,22 @@ const clean=d=>{const x=d.data();if(!x)return null;const mekan=str(x.mekan)||"es
 showVenue(V,true);
 
 const provider=new GoogleAuthProvider();
+let loginErr="";
+const LOGIN_ERR={
+  "auth/unauthorized-domain":`Bu site Firebase'de yetkili değil. Firebase → Authentication → Settings → Authorized domains'e "${location.hostname}" ekle.`,
+  "auth/operation-not-allowed":"Google ile giriş Firebase'de açık değil. Authentication → Sign-in method → Google → Enable.",
+  "auth/configuration-not-found":"Firebase'de Authentication henüz başlatılmamış (Authentication → Get started).",
+  "auth/popup-closed-by-user":"Giriş penceresi kapandı. Tekrar dene; yine hemen kapanıyorsa tarayıcının açılır pencere ve çerez ayarlarına bak.",
+  "auth/network-request-failed":"Bağlantı hatası, tekrar dene.",
+  "auth/internal-error":"Google girişi tamamlanamadı (iç hata). Sayfayı yenileyip tekrar dene.",
+};
 function login(){
-  if(!auth)return;
+  if(!auth)return;loginErr="";
   signInWithPopup(auth,provider).catch(e=>{
-    if(["auth/popup-blocked","auth/operation-not-supported-in-this-environment","auth/cancelled-popup-request"].includes(e?.code))signInWithRedirect(auth,provider);
-    else if(e?.code!=="auth/popup-closed-by-user"){offline="Giriş yapılamadı: "+(e?.code||"bilinmeyen hata");render()}
+    console.error("Giriş hatası",e);
+    if(["auth/popup-blocked","auth/operation-not-supported-in-this-environment","auth/cancelled-popup-request"].includes(e?.code))return signInWithRedirect(auth,provider);
+    loginErr=(LOGIN_ERR[e?.code]||"Giriş yapılamadı.")+` (${e?.code||"bilinmeyen"})`;
+    if(sel)tint(sel,false);sel=null;view="hesap";open();
   });
 }
 function updateAcct(){
