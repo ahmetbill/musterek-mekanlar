@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// Bizim Masalar — Firestore güvenlik kuralları
+// Müşterek Mekanlar — Firestore güvenlik kuralları
 // Firebase konsolu → Firestore Database → Rules sekmesine bu dosyanın tamamını yapıştırıp Publish.
 service cloud.firestore {
   match /databases/{database}/documents {

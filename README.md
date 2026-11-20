@@ -1,7 +1,9 @@
-# Bizim Masalar
+# Müşterek Mekanlar
 
 Arkadaş grubunun favori mekânlarının izometrik 3D maketleri. Her masaya tıklanır; o masada yaşanan anılar, fotoğraflar ve yorumlar açılır.
 Mekânlarla resmi bir bağı yoktur.
+
+**Site:** https://ahmetbill.github.io/musterek-mekanlar/ · Fikir, mekânlar, kararlar ve yapılacaklar: [PROJE.md](PROJE.md)
 
 - **Site:** statik (GitHub Pages). Three.js ve Firebase SDK'sı CDN'den yüklenir; derleme adımı yok.
 - **Veri:** Firebase (ücretsiz Spark planı) — Google ile giriş + Firestore. Fotoğraflar sıkıştırılıp Firestore belgelerinde tutulur (Storage kullanılmaz).

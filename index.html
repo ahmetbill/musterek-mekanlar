@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bizim Masalar</title>
+<title>Müşterek Mekanlar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -148,7 +148,7 @@ details.cm summary::-webkit-details-marker{display:none}
 <canvas id="c" aria-label="Mekânın 3D maketi; masalara dokunarak anıları aç"></canvas>
 <div class="hero front out" id="h2" aria-hidden="true"></div>
 <div class="slogan out2" id="slogan" aria-hidden="true"></div>
-<h1 class="lab brand" style="margin:0;font-weight:400"><b>Bizim Masalar</b><span id="vname">Espressolab Esentepe</span></h1>
+<h1 class="lab brand" style="margin:0;font-weight:400"><b>Müşterek Mekanlar</b><span id="vname">Espressolab Esentepe</span></h1>
 <div class="lab meta" id="count"></div>
 <div class="lab hint" id="hint"><b>Sürükle, döndür</b>masaya dokun, anıyı aç</div>
 <div class="load" id="load">maket kuruluyor…</div>
@@ -280,7 +280,7 @@ function chars(v){
 }
 function look(v,first){
   const st=document.documentElement.style;for(const [k,x] of Object.entries(v.renk||{}))st.setProperty("--"+k,x);
-  $("vname").textContent=v.ad;document.title="Bizim Masalar · "+v.ad;
+  $("vname").textContent=v.ad;document.title="Müşterek Mekanlar · "+v.ad;
   const i=VENUES.indexOf(v),n=VENUES.length,p=x=>String(x).padStart(2,"0");$("idx").textContent=`${p(i+1)} / ${p(n)}`;
   $("prev").disabled=n<2;$("next").disabled=n<2;
   $("dots").innerHTML=VENUES.map(x=>`<button aria-label="${esc(x.ad)}" aria-current="${x===v}" data-dot="${x.id}"></button>`).join("");
