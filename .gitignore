@@ -1,0 +1,15 @@
+# Referans fotoğrafları ve çizimler (başkalarının yüzleri var, depoya girmez)
+foto/
+IMG_*
+*.jpeg
+model/
+web/
+
+# Blender
+*.blend
+*.blend1
+
+# Diğer
+.DS_Store
+Thumbs.db
+__pycache__/
