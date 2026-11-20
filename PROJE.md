@@ -22,7 +22,7 @@ Mekânlarla resmi bir bağı yoktur; arkadaş grubunun kendi anı defteridir.
 | # | Mekân | Durum | Masa | Renk | Not |
 |---|---|---|---|---|---|
 | 01 | Espressolab Esentepe (Şişli, Topkapı Üni. yakını) | Yayında | 39 | Terakota | En karmaşık mekân: 2 kat, asma kat, atriyum, kapalı dış alan, teras |
-| 02 | — | Sırada | | | |
+| 02 | Rumî Mehmet Paşa Camii (Üsküdar) | Hazır, yayın bekliyor | 1 (bank) | Çini mavisi + lale kırmızısı, ebru | Tek nokta: manzaraya bakan bank |
 
 ### 01 · Espressolab Esentepe
 
@@ -37,6 +37,15 @@ Sokaktan içeri sıra:
 7. **Asma kat** — üst katla arası kapalı; atriyumdan, manzara boşluğunun yanından başlayan dönen merdivenle çıkılır
 
 Kaynaklar: Google Maps fotoğrafları (yalnızca referans, depoda yok) + Bilal'in çizimleri.
+
+### 02 · Rumî Mehmet Paşa Camii (Üsküdar)
+
+Bu mekânın olayı: ilerideki marketten turşu, acılı cips, çiğköfte, lavaş ve kola alınır; revakın yükseltisinde, cami kapısı seviyesinde, sol uçtaki banka oturulur; yan kemerden, Boğaz'a ve köprüye karşı yenir. Maketin tek "masası" o bank (`Masa_01`, "Manzara bankı").
+
+- **Yönler:** revaktan camiye giren kişinin solu Boğaz tarafı (revakın sol ucundaki manzara bankı oraya bakar; aşağıda parmaklık ve inen kapı); revakın önü bahçe ve şadırvan kameriyesi. Revakın hemen önündeki bank şadırvana bakar, yalnız dekor.
+- **Maket:** arkada cami (revak, 5 kemer, almaşık duvarlar, kasnaklı kubbe, yan kanatlarda küçük kubbeler), sağ köşede minare, sağ arkada türbe; solda duvarın ötesinde yamaç, evler, Boğaz ve köprü silueti.
+- **Görünüm:** çini mavisi zemin, lale kırmızısı dev başlık, kenarlarda ebru deseni (`assets/desen/ebru.svg`), sloganın üstünde lale (`assets/desen/lale.svg`).
+- **Betik:** `scripts/build_rumi.py`. Kroki yok; ölçüler fotoğraflardan yaklaşık. Krokiyle düzeltilebilir.
 
 ## Kararlar
 
@@ -63,7 +72,7 @@ Kaynaklar: Google Maps fotoğrafları (yalnızca referans, depoda yok) + Bilal'i
 - [ ] Firebase kurulumunu bitir: Google girişi, Authorized domains (`ahmetbill.github.io`), Firestore, kurallar
 - [ ] İlk anıyı ekleyip uçtan uca dene (giriş → anı → fotoğraf → yorum → silme)
 - [ ] Arkadaşlara linki gönder, herkes bir kere giriş yapsın ("Kimler vardı" listesi dolsun)
-- [ ] 02 numaralı mekân
+- [x] 02 numaralı mekân: Rumî Mehmet Paşa Camii (sitede canlı dene: bank seçimi, iğne, ebru)
 - [ ] İsteğe bağlı: siteyi e-posta listesiyle yalnız gruba kapat
 - [ ] İsteğe bağlı: özel alan adı
 - [ ] İsteğe bağlı: maketlerde küçük karakterler (biz), gece/gündüz ışığı

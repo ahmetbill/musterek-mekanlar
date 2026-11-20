@@ -21,6 +21,8 @@
 html,body{height:100%}
 body{margin:0;color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif;overflow:hidden;background:var(--f2)}
 .field{position:fixed;inset:0;z-index:-1;background:radial-gradient(110% 85% at 62% 58%,var(--f1) 0%,var(--f2) 78%)}
+.field::before{content:"";position:absolute;inset:0;background:var(--desen,none) center/cover no-repeat;opacity:.42;transition:opacity .8s;
+  -webkit-mask-image:radial-gradient(80% 75% at 60% 58%,transparent 30%,#000 85%);mask-image:radial-gradient(80% 75% at 60% 58%,transparent 30%,#000 85%)}
 .field::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 50%,transparent 55%,rgba(0,0,0,.35))}
 button,input,textarea{font:inherit;color:inherit}
 button{cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -35,7 +37,8 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .hero .ch{display:inline-block;transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .7s}
 .hero.out .ch{transform:translateY(55%);opacity:0;transition-delay:0s!important;transition-duration:.35s}
 .slogan{position:fixed;right:clamp(16px,6vw,110px);top:44%;z-index:2;pointer-events:none;text-align:right;white-space:pre-line;
-  font:italic 400 clamp(26px,2.7vw,44px)/1 "Instrument Serif",serif;color:var(--type);transition:opacity .6s}
+  font:italic 400 clamp(26px,2.7vw,44px)/1 "Instrument Serif",serif;color:var(--sl);transition:opacity .6s}
+.slogan::before{content:"";display:block;margin:0 0 14px auto;width:clamp(34px,3vw,52px);aspect-ratio:1/2;background:var(--motif,none) center/contain no-repeat}
 .out2{opacity:0}
 .lab{position:fixed;z-index:3;font-size:11px;line-height:1.35;color:var(--soft);pointer-events:none}
 .lab b{display:block;color:var(--ink);font-weight:500}
@@ -150,7 +153,7 @@ details.cm summary::-webkit-details-marker{display:none}
 <div class="slogan out2" id="slogan" aria-hidden="true"></div>
 <h1 class="lab brand" style="margin:0;font-weight:400"><b>Müşterek Mekanlar</b><span id="vname">Espressolab Esentepe</span></h1>
 <div class="lab meta" id="count"></div>
-<div class="lab hint" id="hint"><b>Sürükle, döndür</b>masaya dokun, anıyı aç</div>
+<div class="lab hint" id="hint"><b>Sürükle, döndür</b><span id="ipucu">masaya dokun, anıyı aç</span></div>
 <div class="load" id="load">maket kuruluyor…</div>
 <div class="icons">
   <button class="ic" id="ust" aria-pressed="true" aria-label="Üst katı göster/gizle" title="Üst kat"><svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/></svg></button>
@@ -208,6 +211,11 @@ const VENUES=[
     [[36,37,38,39],"Üst kat sağ","Üst kat","Üst kat"],
     [[26,27,28],"Atriyuma bakan","Üst kat","Üst kat"],
     [[29,30,31],"Asma kat","Asma kat","Üst kat"]]},
+  // Rumî Mehmet Paşa Camii: tek "masa" manzaraya bakan bank (marketten turşu, acılı cips, çiğköfte, lavaş, kola).
+  {id:"rumi",ad:"Rumî Mehmet Paşa Camii",baslik:["Rumî","Mehmet"],alt:"Paşa Camii",slogan:"Turşu, cips, çiğköfte.\nManzara bizden.",thumb:"assets/thumbs/rumi.png",ustKat:false,
+   renk:{f1:"#2b5fa8",f2:"#0b1d40",type:"#e3343f",ink:"#f6eedd",sl:"#f6eedd"},kaide:0x0a1834,
+   desen:"assets/desen/ebru.svg",motif:"assets/desen/lale.svg",birim:"bank",ipucu:"banka dokun, anıyı aç",
+   masalar:[[[1],"Manzara bankı","Revak · Boğaz tarafı","Zemin"]]},
 ];
 for(const v of VENUES){v.T={};v.order=[];v.open=new Set(v.openAbove||[]);
   for(const [ids,ad,bolge,kat] of v.masalar)ids.forEach((id,i)=>{v.T[id]={id,ad:ids.length>1?`${ad} ${i+1}`:ad,bolge,kat};v.order.push(id)})}
@@ -280,6 +288,9 @@ function chars(v){
 }
 function look(v,first){
   const st=document.documentElement.style;for(const [k,x] of Object.entries(v.renk||{}))st.setProperty("--"+k,x);
+  for(const k of ["desen","motif"])st.setProperty("--"+k,v[k]?`url("${v[k]}")`:"none");
+  st.setProperty("--sl",v.renk?.sl||"var(--type)");
+  $("ipucu").textContent=v.ipucu||"masaya dokun, anıyı aç";
   $("vname").textContent=v.ad;document.title="Müşterek Mekanlar · "+v.ad;
   const i=VENUES.indexOf(v),n=VENUES.length,p=x=>String(x).padStart(2,"0");$("idx").textContent=`${p(i+1)} / ${p(n)}`;
   $("prev").disabled=n<2;$("next").disabled=n<2;
@@ -349,7 +360,7 @@ function pinMesh(color,last){
 function refreshPins(){
   for(const id in pins)pins[id].parent?.remove(pins[id]);pins={};
   const mine=anilar.filter(inV),n=mine.length,m=new Set(mine.map(a=>a.masa)).size;
-  $("count").innerHTML=`<b>${V.order.length} masa</b>${n?`${n} anı · ${m} masada`:me?"henüz anı yok":"giriş yapınca anılar görünür"}`;
+  $("count").innerHTML=`<b>${V.order.length} ${V.birim||"masa"}</b>${n?`${n} anı · ${m} masada`:me?"henüz anı yok":"giriş yapınca anılar görünür"}`;
   if(!M)return;
   const last=lastMasa(),y0=M.root.position.y;M.root.position.y=0;M.root.updateMatrixWorld(true);
   for(const id of V.order){

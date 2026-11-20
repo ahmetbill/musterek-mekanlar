@@ -13,3 +13,6 @@ web/
 .DS_Store
 Thumbs.db
 __pycache__/
+
+# Mekân referans fotoğrafları (Google Maps vb., depoya girmez)
+Rum*Mehmetpa*Camii/

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200">
+  <!-- Osmanli lalesi: badem bicimli, sivri uclu taclar -->
+  <path d="M50 112 C50 140 47 170 42 198" fill="none" stroke="#3d8a4f" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M47 168 C30 158 18 136 13 110 C30 128 41 144 49 158Z" fill="#3d8a4f"/>
+  <path d="M50 112 C29 106 17 82 19 32 C33 58 44 82 50 112Z" fill="#c8102e"/>
+  <path d="M50 112 C71 106 83 82 81 32 C67 58 56 82 50 112Z" fill="#c8102e"/>
+  <path d="M50 6 C63 38 67 72 58 102 L50 112 L42 102 C33 72 37 38 50 6Z" fill="#e3343f"/>
+  <path d="M50 30 C55 54 56 80 50 104 C44 80 45 54 50 30Z" fill="#a50d25" opacity=".55"/>
+</svg>
